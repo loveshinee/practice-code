@@ -6,11 +6,11 @@
 #header-nav{
 	border-radius: 0;
 	border: 1px solid black;
-	
+		background-color: grey;
+
 }
 .navbar .navbar-header{
 	height: 60px;
-	background-color: grey;
 }
 .navbar-brand h1{
 	/*font-size: 20px;*/
@@ -20,6 +20,9 @@
 }
 .navbar-nav li:hover{
 	background-color: grey;
+}
+#collapse-nav{
+	background-color: #fff;
 }
 .navbar-nav li a{
 	text-align: center;
