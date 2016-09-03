@@ -1,0 +1,46 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+/* header */
+#header-nav{
+	border-radius: 0;
+	border: 1px solid black;
+	
+}
+.navbar .navbar-header{
+	height: 60px;
+	background-color: grey;
+}
+.navbar-brand h1{
+	/*font-size: 20px;*/
+	margin-top: 0;
+	margin-left: 15px;
+	color: #000;
+}
+.navbar-nav li:hover{
+	background-color: grey;
+}
+.navbar-nav li a{
+	text-align: center;
+	color: #000;
+}
+/* end header */
+
+/* main contain */
+.main-contain h3{
+	padding-top: 15px;
+	text-align: center;
+}
+.row section div{
+	background-color: gray;
+	
+
+}
+.row section p{
+	width:90%;
+	margin: 0 auto;
+}
+/* end main contain*/
+
+/**********************************************************/
