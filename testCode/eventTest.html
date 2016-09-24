@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src ="http://code.jquery.com/jquery.min.js"></script>
+	<style>
+		#mylist{
+			position: absolute;
+			visibility: hidden;
+		}
+	</style>
+
+</head>
+<body>
+	<div id="mydiv">
+		click this!
+	</div>
+	<ul id="mylist">
+		<li>item 1</li>
+		<li>item 2</li>
+		<li>item 3</li>	
+	</ul>
+	<script type="text/javascript">
+		var EventUtil = {
+			addHandler : function(element,type,handler){
+				if(element.addEventListener){
+					element.addEventListener(type,handler,false);
+				}else if(element.attachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = handler;
+				}
+			},
+			removeHandle : function(element,type,handler){
+				if(element.removeEventListener){
+					element.removeEventListener(type,handler,false);
+				}else if(element.detachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = null;
+				}
+			},
+			getEvent : function(event){
+				return event ? event : window.event;
+			},
+			getRelatedTarget :function(event){
+				if(event.relatedTarget){
+					return event.relatedTarget;
+				}else if(event.toElement){
+					return event.toElement;
+				}else if(event.fromElement){
+					return event.fromElement;
+				}else{
+					return null;
+				}
+			},
+			getTarget : function(event){
+				
+				return event.target || event.srcElement;
+			},
+			preventDefault : function(event){
+				if(event.preventDefault){
+					event.preventDefault();
+				}else{
+					event.returnValue = false;
+				}
+			}
+		};
+
+		EventUtil.addHandler(window,"load",function(event){
+			var div = document.getElementById("mydiv");
+			EventUtil.addHandler(div,"contextmenu",function(event){
+				 // alert(1);
+				event = EventUtil.getEvent(event);
+				EventUtil.preventDefault(event);
+
+				var mylist = document.getElementById("mylist");
+				mylist.style.left = event.clientX +"px";
+				mylist.style.top  = event.clientY +"px";
+				mylist.style.visibility = "visible";
+
+			});
+			EventUtil.addHandler(document,"click",function(event){
+				document.getElementById("mylist").style.visibility = "hidden";
+
+			});
+
+			
+		});
+
+		EventUtil.addHandler(window,"beforeunload",function(event){
+				event = EventUtil.getEvent(event);
+				var message = "I'm really going to miss you if you go";
+				event.returnValue = message;
+				return message;
+			});
+		(function(){
+			var showcount = 0;
+			EventUtil.addHandler(window,"load",function(){
+				alert("load fired");
+			});
+			EventUtil.addHandler(window,"pageshow",function(){
+				showcount++;
+				alert("Show has been fired"+showcount+"times.");
+			});
+		})();	
+		</script>
+</body>
+</html>

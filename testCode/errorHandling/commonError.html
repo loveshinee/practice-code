@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>commonError</title>
+</head>
+<body>
+	
+	<script>
+		var url = "www.baidu.com?v=1";
+		function getPara(url) {
+			// body...
+			if(typeof url == "string"){
+				var pos = url.indexOf("?");
+				if(pos > -1){
+					return url.substring(pos+1);
+				}
+			}
+		}
+		var params = getPara(url);
+		alert(params);
+	</script>
+</body>
+</html>

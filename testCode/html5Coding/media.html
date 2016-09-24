@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Media</title>
+</head>
+<body>
+	<video src="video1.mpg" id="myVideo">Video player not available</video>
+	<audio src="audio1.mpeg" id="myAudio"></audio>
+	<script type="text/javascript">
+		var EventUtil = {
+			addHandler : function(element,type,handler){
+				if(element.addEventListener){
+					element.addEventListener(type,handler,false);
+				}else if(element.attachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = handler;
+				}
+			},
+			removeHandle : function(element,type,handler){
+				if(element.removeEventListener){
+					element.removeEventListener(type,handler,false);
+				}else if(element.detachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = null;
+				}
+			},
+			getEvent : function(event){
+				return event ? event : window.event;
+			},
+			getRelatedTarget :function(event){
+				if(event.relatedTarget){
+					return event.relatedTarget;
+				}else if(event.toElement){
+					return event.toElement;
+				}else if(event.fromElement){
+					return event.fromElement;
+				}else{
+					return null;
+				}
+			},
+			getTarget : function(event){
+				
+				return event.target || event.srcElement;
+			},
+			preventDefault : function(event){
+				if(event.preventDefault){
+					event.preventDefault();
+				}else{
+					event.returnValue = false;
+				}
+			}
+		};
+
+
+
+		var audio = document.getElementById("myAudio");
+		if(audio.canPlayType("audio.mpeg")){
+			//do something
+		}
+		//利用构造函数audio
+		var audio1 = new Audio("sound.mp3");
+		EventUtil.addHandler(audio1,"canplaythrough",function(event) {
+			// body...
+			audio1.play();
+		});
+	</script>
+</body>
+</html>

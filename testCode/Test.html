@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	#div1{width: 500px;height: 500px;}
+	.loadWrapper{width: 668px;height: 466px;}
+	.loadMain{width: 668px;height: 466px;margin: 0 auto;position: relative;background: url(img/load-bg.jpg) no-repeat;}
+	.firstload-bg{width: 667px;height: 380px;}
+	.foot1{width: 100%;height: 70px;margin-left: 15px;}
+.progressWrap1{width: 567px;height: 20px;background: url(img/progress-bg.png) no-repeat ;display: block;}
+.progress1{height: 20px;display: inline-block;background: url(img/progress.png) no-repeat;float: left;}
+.star1{width: 51px;height: 51px;background: url(img/progress-star.png) no-repeat;display: inline-block;float: left;margin-top: -20px;margin-left: -25px;}
+.proValue1{display: block;width: 130px;height: 50px;line-height: 50px;color: #f4ccfe;font-weight: 600;font-size: 14px;}
+.loadMain .banner{height:360px;width:644px;margin-left: 2px;position: relative;}
+.loadMain .banner ul{height: 360px;width: 640px;}
+.loadMain .banner li{width: 640px;height:100%;position:absolute;top:30px;left:4px;}
+.loadMain .banner li img{width:100%;height:100%;}
+	</style>
+}
+
+
+</head>
+<body>
+	<div class="loadWrapper">
+			<div class="loadMain">
+				<div class="firstload-bg">
+					<div class="firstload-pic">
+						<div class="banner">
+          				<ul>
+            				<li><img src="img/banner2.jpg"></li>
+            				<li><img src="img/banner1.jpg"></li>
+          				</ul>
+        			</div>
+					</div>
+				</div>	
+				<div class="foot1">
+					<span class="proValue1">更新进度：<strong id="proValue"></strong>%</span>
+					<span class="progressWrap1">
+						<strong class="progress1"></strong>
+						<i class="star1"></i>
+					</span>
+				</div>
+			</div>
+		</div>
+		<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript" ></script>
+	<script>
+	$(document).ready(function(){
+		banner();
+	});
+	function banner(){
+		var a=$(".banner");
+		var d=$(".banner_num");
+		var e="active1";
+		var left=0;
+		var oSpeed=300;
+		var speed=3000;
+		var lastTime=0;
+		a.find("ul li").slice(1).css("opacity","0");
+		
+
+    /*轮播切换*/
+		function action(){
+			var nowTime=new Date().getTime();
+			if(nowTime-lastTime<oSpeed) return;
+			else{
+				left++;
+				if(left>=$(".banner").find("ul li").length){
+					left=0;
+					a.find("ul li").eq(left).animate({opacity:1},oSpeed,function(){a.find("ul li").eq(left).siblings().animate({opacity:0},oSpeed)});
+				}
+				else{
+					
+					a.find("ul li").eq(left).animate({opacity:1},oSpeed,function(){a.find("ul li").eq(left).siblings().animate({opacity:0},oSpeed)})
+				}
+			}
+		}
+
+		var myAction=setInterval(action,speed);
+    //鼠标悬浮，轮播开始与停止
+		a.mouseover(function(){
+			clearInterval(myAction);
+		});
+		a.mouseout(function(){
+			myAction = setInterval(action,speed)
+		});
+	
+}
+		// function SuperType() {
+		// 	this.property = true;
+		// }
+		// SuperType.prototype.getSuperValue = function(){
+		// 	return this.property;
+		// }
+		// function SubType (){
+		// 	this.subproperty = false;
+		// }
+		// //继承了SuperType
+		// SubType.prototype = new SuperType();
+		// //添加新方法
+		// SubType.prototype.getSubValue = function(){
+		// 	return this.subproperty;
+		// }
+		// //重写超类型的方法
+		// SubType.prototype.getSuperValue = function(){
+		// 	return false;
+		// }
+		// var instance = new SubType();
+		// alert(instance.getSuperValue());//false
+		// function SuperType(){
+		// 	this.color = ["red","blue","green"];
+		// }
+		// function SubType(){}
+		// SubType.prototype = new SuperType();
+		// var instance1 = new SubType();
+		// instance1.color.push("black");
+
+		// var instance2 = new SubType();
+		// alert(instance1.color == instance2.color);
+		//借用构造函数实现继承
+		// function SuperType(name){
+		// 	this.name = name;
+		// 	this.color = ["reb","blue","green"];		
+		// }
+		// SuperType.prototype.sayName = function(){
+		// 	alert(this.name);
+		// }
+		// function SubType(){
+		// 	//继承了SuperType
+		// 	SuperType.call(this,"pet");
+		// }
+		// var instance1 = new SubType();
+		// instance1.sayName();//报错
+		//组合继承
+		// function SuperType(name){
+		// 	this.name = name;
+		// 	this.color = ["red","black"];
+		// }
+		// SuperType.prototype.sayName = function(){
+		// 	alert(this.name);
+		// }
+
+		// function SubType (name,age){
+		// 	//构造函数继承属性
+		// 	SuperType.call(this,name);
+		// 	this.age = age;
+		// }
+		// //原型链继承方法
+		// SubType.prototype = new SuperType();
+		// SubType.prototype.constructor = SubType;
+		// SubType.prototype.sayAge = function(){
+		// 	alert(this.age);
+		// }
+		// var instance1 = new SubType("tim",30);
+		// instance1.color.push("green");
+		// alert(instance1.color);
+		// instance1.sayAge();
+		// instance1.sayName();
+
+		// var instance2 = new SubType("jac",20);
+		// alert(instance2.color);
+		// instance2.sayAge();
+		// instance2.sayName();
+		// (function(){
+		// 	//私有变量和方法
+		// 	var name = "";
+		// 	function Person(value){
+		// 		name = value;
+		// 	}
+		// 	//共有/特权方法
+		// 	//不使用函数声明和不使用var关键字，创建全局变量
+		// 	myObject = function(){};
+		// 	myObject.prototype.publiceFun = function(){
+		// 		privateVariable++;
+		// 		return publiceFun();
+		// 	};
+
+		// })();
+		// (function(){
+		// 	var name = "";
+		// 	Person = function(value){
+		// 		name = value;
+		// 	}
+		// 	Person.prototype.sayName = function(){
+		// 		return name;
+		// 	}
+		// 	Person.prototype.setName = function(value){
+		// 		name =value;
+		// 	}
+		// })();
+		// var person1 = new Person("jack");
+		// // person1.setName("pet");
+		// alert(person1.sayName());//jack
+		// var person2 = new Person("mick");
+		// alert(person1.sayName());//mick
+		// alert(person2.sayName());//mick
+		//JS按照惯例，以对象字面量的形式来创建单例
+		//模块模式通过为单例添加私有变量和特权方法使其得到增强
+		// var singleton = function(){
+		// 	var privateVariable = 10;
+		// 	function privateFun(){
+		// 		return false;
+		// 	}
+		// 	return {
+		// 		publicProperty = true;
+		// 		function publicFun(){
+		// 			privateVariable++;
+		// 			return privateFun();
+		// 		}
+		// 	};
+		// }();
+		//增强模块模式
+		// var singleton = function(){
+		// 	var privateVariable = 10;
+		// 	function privateFun(){
+		// 		return false;
+		// 	}
+		// 	//创建对象
+		// 	var obj = new CustomType();
+		// 	//添加公有属性和方法
+		// 	obj.publicProperty = true;
+		// 	obj.publicFun = function(){
+		// 		privateVariable++;
+		// 		return privateFun();
+		// 	}
+		// 	return obj;
+		// }
+		// var age = 10;
+		// function sayhI(){
+		// 	alert("HI");
+		// };
+		// alert(window.age);
+		// window.sayhI();
+		// var age =10;
+		// window.color = "blue";
+		// delete window.age;// false,IE9以下抛出错误
+		// // delete window.color;//true，IE9以下抛出错误
+		// var value1 = value;//报错
+		// var value2 = window.value;//undefined
+		// var  blocked = false;
+		// try{
+		// 	var popWin = window.open("http://www.baidu.com","_blank");
+		// 	if(popWin == null){
+		// 		blocked = true;
+		// 	}
+		// }catch(ex){
+		// 	blocked = true;
+		// }
+		// if(blocked){
+		// 	alert("the pop was blocked");
+		// }
+		// setTimeout(function(){
+		// 	alert("hello");
+		// },1000);
+		// var num = 0;
+		// var max = 10;
+		// var intervalId = null;
+		// function intervalFun(){
+		// 	num++;
+		// 	if(num == max){
+		// 		clearInterval(intervalId);
+		// 		alert("done");
+		// 	}
+		// }
+		// intervalId = setInterval(intervalFun,100);
+		// var pop = prompt("what's your name","pet");
+		// if(pop == ""){
+		// 	alert("please write your name");
+		// }else{
+		// 	alert("welcome "+pop);
+		// }
+		// alert(location.search.length);
+		// function getqueryArg(){
+		// 	var qa    = location.search.length > 0 ? location.search.substring(1) : "";
+		// 	var args  = {};
+		// 	var nums  = qa.length > 0 ? qa.split("&") : [];
+		// 	var len   = nums.length;
+		// 	for(var i = 0;i<len;i++){
+		// 		var num   = nums[i].split("=");
+		// 		var name  = decodeURIComponent(num[0]);
+		// 		var value = decodeURIComponent(num[1]);
+		// 		if(name.length > 0){
+		// 			args[name] = value;
+		// 		}
+		// 	}
+		// 	return args;
+		// }
+		// location.href = "http://www.baidu.com";
+		// window.location = "http://www.baidu.com";
+		// location.assign ("http://www.google.com") ;
+
+		// function hasPlugin(name){
+		// 	name = name.toLowerCase();
+		// 	for(var i=0;i<navigator.plugins.length;i++){
+		// 		if(navigator.plugins[i].name.toLowerCase().indexOf(name)>-1){
+		// 			return true;
+		// 		}
+		// 	}
+		// }
+		// alert(hasPlugin("Flash"));
+		//IE檢測插件
+		// function hasIEPlugin(name){
+		// 	try{
+		// 		new ActiveXObject(name);
+		// 		return true;
+		// 	}catch(ex){
+		// 		return false;
+		// 	}
+
+		// }
+		// window.onload = function(){
+			// var div1 = document.getElementById("div1");
+			// div1.focus();
+			// alert(document.activeElement === div1);
+			//同辈元素前插
+			// element.insertAdjacentHTML("beforebegin","<p>this is a insert</p>");
+			// //最后一个子元素
+			// element.insertAdjacentHTML("beforeend","<p>this is a insert</p>");
+			// //第一子元素
+			// element.insertAdjacentHTML("afterbegin","<p>this is a insert</p>");
+			// //同辈元素后插
+			// element.insertAdjacentHTML("afterend","<p>this is a insert</p>");
+			
+		// };
+		var EventUtil = {
+			addHandler : function(element,type,handler){
+				if(element.addEventListener){
+					element.addEventListener(type,handler,false);
+				}else if(element.attachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = handler;
+				}
+			},
+			removeHandle : function(element,type,handler){
+				if(element.removeEventListener){
+					element.removeEventListener(type,handler,false);
+				}else if(element.detachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = null;
+				}
+			},
+			getEvent : function(event){
+				return event ? event : window.event;
+			},
+			getRelatedTarget :function(event){
+				if(event.relatedTarget){
+					return event.relatedTarget;
+				}else if(event.toElement){
+					return event.toElement;
+				}else if(event.fromElement){
+					return event.fromElement;
+				}else{
+					return null;
+				}
+			},
+			getTarget : function(event){
+				
+				return event.target || event.srcElement;
+			},
+		};
+		// EventUtil.addHandler(window,"resize",function(event){
+		// 	alert("resized");
+		// });
+
+		// var div1 = document.getElementById("div1");
+		// var handler = function(){
+		// 	alert("click");
+		// };
+		// EventUtil.addHandler(div1,"click",handler);
+		// var div1 = document.getElementById("div1");
+		// div1.onclick = function(event){
+		// 	alert(event.eventPhase);//2
+		// };
+		// document.body.addEventListener("click",function(event){
+		// 	alert(event.eventPhase);//1
+		// },true);
+		// document.body.onclick = function(event){
+		// 	alert(event.eventPhase);//3
+		// };
+		// var div1 = document.getElementById("div1");
+		// div1.attachEvent("onclick",function(event){
+		// 	alert(event.type);
+		// });
+		// var EventUtil = {
+		// 	addHandler : function(){
+
+		// 	},
+		// 	getEvent : function(event){
+		// 		return event ? event : window.event;
+		// 	},
+		// 	getTarget : function(event){
+				
+		// 			return event.target || event.srcElement;
+		// 	},
+		// 	preventDefault : function(event){
+		// 		if(event.preventDefault){
+		// 			event.preventDefault();
+		// 		}else{
+		// 			event.returnValue = false;
+		// 		}
+		// 	}
+		// }
+		// var div1 = document.getElementById("div1");
+		// EventUtil.addHandler(div1,"click",function(event){
+		// 	event = EventUtil.getEvent(event);
+		// 	var pageX = event.pageX;
+		// 	var pageY = event.pageY;
+		// 	if(pageX === undefined){
+		// 		pageX = event.clientX + (document.body.scrollLeft || document.documentElement.scrollLeft);
+		// 	}
+		// 	if(pageY === undefined){
+		// 		pageY = event.clientY + (document.body.scrollTop || document.documentElement.scrollTop);
+		// 	}
+		// 	alert("page coordinate: " + pageX+","+pageY);
+		// });
+		// var div1 = document.getElementById("div1");
+		// EventUtil.addHandler(div1, "mouseout", function(event){
+		// 	event = EventUtil.getEvent(event);
+			// var keys = new Array();
+			// if (event.shiftKey){
+			// 	keys.push("shift");
+			// }
+			// if (event.ctrlKey){
+			// 	keys.push("ctrl");
+			// }
+			// if (event.altKey){
+			// 	keys.push("alt");
+			// }
+			// if (event.metaKey){
+			// 	keys.push("meta");
+			// }
+			// alert("Keys: " + keys.join(","));
+			// var target = EventUtil.getTarget(event);
+			// var relatedTarget = EventUtil.getRelatedTarget(event);
+			// alert("moused out of: " +target.tagName +"to"+relatedTarget.tagName);
+			// EventUtil.addHandler(document,"mousewheel",function(event){
+			// 	event = EventUtil.getEvent(event);
+			// 	alert(event.wheelDelta);
+			// });
+		// });
+	</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>XDM</title>
+</head>
+<body>
+	<iframe src="http://www.baidu.com" frameborder="0" width="500" height="500" id="myframe"></iframe>
+
+	<script type="text/javascript">
+		var EventUtil = {
+			addHandler : function(element,type,handler){
+				if(element.addEventListener){
+					element.addEventListener(type,handler,false);
+				}else if(element.attachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = handler;
+				}
+			},
+			removeHandle : function(element,type,handler){
+				if(element.removeEventListener){
+					element.removeEventListener(type,handler,false);
+				}else if(element.detachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = null;
+				}
+			},
+			getEvent : function(event){
+				return event ? event : window.event;
+			},
+			getRelatedTarget :function(event){
+				if(event.relatedTarget){
+					return event.relatedTarget;
+				}else if(event.toElement){
+					return event.toElement;
+				}else if(event.fromElement){
+					return event.fromElement;
+				}else{
+					return null;
+				}
+			},
+			getTarget : function(event){
+				
+				return event.target || event.srcElement;
+			},
+			preventDefault : function(event){
+				if(event.preventDefault){
+					event.preventDefault();
+				}else{
+					event.returnValue = false;
+				}
+			}
+		};
+		var iframeWindow = document.getElementById("myframe").contentWindow;
+		iframeWindow.postMessage("a message", "http://p2p.root.com");
+		EventUtil.addHandler(window,"message",function (event) {
+			if(event.origin == "http://p2p.root.com"){
+				processMessage(event.data);
+				event.source.PostMessage("Received!","http://www.roor.com");
+			}
+		});
+	</script>	
+</body>
+</html>	

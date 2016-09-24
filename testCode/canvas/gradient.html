@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CanvasGradient</title>
+</head>
+<body>
+	<canvas id="drawing" width="500" height="500"></canvas>
+	<script type="text/javascript">
+		var drawing = document.getElementById("drawing");
+		if(drawing.getContext){
+			context = drawing.getContext("2d");
+			var gradient = context.createLinearGradient(30,30,70,70);
+			gradient.addColorStop(0,"white");
+			gradient.addColorStop(1,"black");
+			context.fillStyle = gradient;
+			context.fillRect(10,10,50,50);
+
+			var gradient2 = context.createRadialGradient(100,100,10,100,100,20);
+			gradient2.addColorStop(0,"white");
+			gradient2.addColorStop(1,"black");
+			context.fillStyle = gradient2;
+			context.fillRect(80,80,40,40);
+		}
+	</script>
+</body>
+</html>

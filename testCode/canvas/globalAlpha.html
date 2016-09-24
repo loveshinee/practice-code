@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>globalAlpha</title>
+</head>
+<body>
+	<canvas id="drawing" width="500" height="500"></canvas>
+	<script type="text/javascript">
+		var drawing  = document.getElementById("drawing");
+		if(drawing.getContext){
+			var context = drawing.getContext("2d");
+			context.fillStyle = "#ff0000";
+			context.fillRect(10,10,50,50);
+			context.globalAlpha = 0.5;
+
+			context.globalCompositeOperation = "destination-over";
+			context.fillStyle = "#0000ff";
+			context.fillRect(30,30,50,50);
+			// context.globalAlpha = 0;
+		}
+	</script>
+</body>
+</html>

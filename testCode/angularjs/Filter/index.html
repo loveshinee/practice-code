@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="angular.min.js"></script>
+	<script src="app.js"></script>
+	<title> Custom Filter</title>
+</head>
+<body ng-app="MsgApp">
+	<h1>Custom Filters</h1>
+	<div ng-controller="MsgController">
+		original:  {{sayMessage()}} <br>
+		loves:     {{ sayLovesMessage() }} <br>
+		Truth:     {{ sayLovesMessage() | truth: 'healthy':'cookies'}} <br>
+		BIG TRUTH:  {{ sayLovesMessage() | truth: 'healthy':'cookies' | uppercase}}<br>
+		<!-- <div>
+			<button></button>
+		</div> -->
+	</div>
+</body>
+</html>

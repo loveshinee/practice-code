@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>formTest</title>
+</head>
+<body>
+	<form action="" class="form1">
+		<input type="text" value="some text" name="username" required>
+		<input type="email" name="email">
+		<input type="url" name="url">
+		<input type="text" pattern="\d+">
+	</form>
+	<select name="list" id="list">
+		<option value="China">China</option>
+		<option value="US">USA</option>
+		<option value="England">England</option>
+		<option value="Jap">Japan</option>
+	</select>
+
+	<form action="">
+		<input type="text" name="tel1" id="tel1" maxlength="3">
+		<input type="text" name="tel2" id="tel2" maxlength="3">
+		<input type="text" name="tel3" id="tel3" maxlength="3">
+	</form>
+
+
+	<script type="text/javascript">
+		var EventUtil = {
+			addHandler : function(element,type,handler){
+				if(element.addEventListener){
+					element.addEventListener(type,handler,false);
+				}else if(element.attachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = handler;
+				}
+			},
+			removeHandler : function(element,type,handler){
+				if(element.removeEventListener){
+					element.removeEventListener(type,handler,false);
+				}else if(element.detachEvent){
+					element.attachEvent("on"+type,handler,false);
+				}else{
+					element["on"+type] = null;
+				}
+			},
+			getEvent : function(event){
+				return event ? event : window.event;
+			},
+			getRelatedTarget :function(event){
+				if(event.relatedTarget){
+					return event.relatedTarget;
+				}else if(event.toElement){
+					return event.toElement;
+				}else if(event.fromElement){
+					return event.fromElement;
+				}else{
+					return null;
+				}
+			},
+			getTarget : function(event){
+				
+				return event.target || event.srcElement;
+			},
+			preventDefault : function(event){
+				if(event.preventDefault){
+					event.preventDefault();
+				}else{
+					event.returnValue = false;
+				}
+			},
+			getCharCode : function(event){
+				if(typeof event.charCode == "number"){
+					return event.charCode;
+				}else{
+					return event.keyCode;
+				}
+			},
+			stopPropagation :function(event){
+				if(event.stopPropagation){
+					event.stopPropagation();
+				}else{
+					event.cancelBubble = true;
+				}
+			},
+			getClipboardText : function(event){
+				var clipboardData = (event.clipboardData || window.clipboardData);
+				return clipboardData.getData("text");
+			},
+			setClipboardText : function(event){
+				if(event.clipboardData){
+					return event.clipboardData.setData("text/plain",value);
+				}else if(window.clipboardData){
+					return window.clipboardData.setData("text",value);
+				}
+			}
+		};
+
+		var textbox = document.forms[0].elements[0];
+		textbox.focus();
+		// EventUtil.addHandler(textbox,"blur",function(event){
+		// 	// event = EventUtil.getEvent(event);
+		// 	// var target = EventUtil.getTarget(event);
+		// 	// target.select();
+		// 	// alert("Test selected" +textbox.value);
+		// 	// var selectText = getSelectedText(textbox);
+		// 	// alert(selectText);
+		// 	var selectText = textbox.setSelectionRange(0,5);
+		// 	alert(selectText);
+		// });
+		// EventUtil.addHandler(textbox,"keypress",function(event){
+		// 	event = EventUtil.getEvent(event);
+		// 	var target = EventUtil.getTarget(event);
+		// 	var charCode = EventUtil.getCharCode(event);
+		// 	if(!/\d/.test(String.fromCharCode(charCode)) && charCode > 9){
+		// 		EventUtil.preventDefault(event);
+		// 	}
+		// });
+		EventUtil.addHandler(textbox,"paste",function(event){
+			event = EventUtil.getEvent(event);
+			var text = EventUtil.getClipboardText(event);
+			if(!/^\d*$/.test(text)){
+				EventUtil.preventDefault(event);
+			}
+		});
+
+		function getSelectedText(textbox){
+			if(typeof textbox.selectionStart == "number"){
+				return textbox.value.substring(textbox.selectionStart,textbox.selectionEnd);
+			}else if(document.selection){
+				return document.selection.createRange().text;
+			}
+		}
+
+		(function(){
+			function tabForward(event){
+				event = EventUtil.getEvent(event);
+				var target = EventUtil.getTarget(event);
+				if(target.value.length == target.maxLength){
+					var form = target.form;
+					for(var i=0,len=form.elements.length; i<len ;i++){
+						if(form.elements[i] == target){
+							if(form.elements[i+1]){
+								form.elements[i+1].focus();
+							}
+							return;
+						}
+					}
+				}
+			}
+			var textbox1 = document.getElementById("tel1");
+			var textbox2 = document.getElementById("tel2");
+			var textbox3 = document.getElementById("tel3");
+
+			EventUtil.addHandler(textbox1,"keyup",tabForward);
+			EventUtil.addHandler(textbox2,"keyup",tabForward);
+			EventUtil.addHandler(textbox3,"keyup",tabForward);
+		})();
+
+		function getSelectedOptions(selectbox){
+			var result = new Array();
+			var option = null;
+			for(var i=0,len=selectbox.options.length;i<len;i++){
+				option = selectbox.options[i];
+				if(option.selected){
+					result.push(option);
+				}
+			}
+			return result;
+		}
+		var select = document.getElementById("list");
+		
+		EventUtil.addHandler(select,"blur",function(){
+			// var selectOptions = getSelectedOptions(selectbox);
+			// var selectbox = document.forms[1].elements["list"];
+			// var selectedindex = selectbox.selectedIndex;
+			// var selectedOption = selectbox.options[selectedindex];
+			// var index = select.selectedIndex;
+			// var selectedOption = select.options[index].value;
+			// alert( selectedOption); 
+		});
+		// var newOption = document.createElement("option");
+		// newOption.appendChild(document.createTextNode("new option"));
+		// newOption.setAttribute("value","Option value");
+		// selectbox.appendChild(newOption);
+		var moveOption = select.options[1];
+		select.insertBefore(moveOption,select.options[moveOption.index+2]);
+	</script>
+</body>
+</html>

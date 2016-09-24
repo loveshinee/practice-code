@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>errorCatch</title>
+</head>
+<body>
+
+
+	<script type="text/javascript">
+		try{
+			//可能会导致错误的代码
+			someFunction();
+			var obj = x;
+		}catch(error){
+			//发生错误时如何处理
+			// alert(error.message);
+			if(error instanceof TypeError){
+				//处理类型错误
+				throw "wrong";
+			}else if(error instanceof ReferenceError){
+				//处理引用错误
+			}else{
+				//处理其他类型错误
+			}
+		}
+		// new eval();
+		// var items1 = new Array(-20);
+		// var obj = x;
+		// eval("a ++ b");
+		// var o = new 10;
+	</script>
+</body>
+</html>
