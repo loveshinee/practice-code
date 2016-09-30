@@ -1,0 +1,261 @@
+##Created by Caojianfa
+<script type="text/javascript">
+    $(document).ready(
+            function () {
+                $("#createTimeBegin").datepicker();
+                $("#createTimeEnd").datepicker();
+            });
+    function editData(id) {
+        window.location.href = "${rc.contextPath}/storehouse/storehouseUpdate.htm?id=" + id;
+    }
+
+    function delData(id) {
+        var url = "${rc.contextPath}/storehouse/storehouseDelete.do?id=" + id;
+        doDeleteRequest(url, id, show);
+    }
+
+    function show(data) {
+        alert(data);
+        if (data.indexOf("成功") != -1) {
+            window.location.href = "${rc.contextPath}/storehouse/storehouseList.htm";
+        }
+    }
+
+    //查看请款单
+    function checkDetail(requestPayoutOrderId) {
+
+        var createDO = {"requestPayoutOrderId": requestPayoutOrderId};
+        var data = JSON.stringify(createDO);
+        window.location.href = "${rc.contextPath}/payment/requestPayoutDetail?requestPayoutOrderId=" + requestPayoutOrderId;
+    ##            $.ajax({
+    ##                url:'${rc.contextPath}/payment/cancelRequestPaymentOrder.do',
+    ##                method:"POST",
+    ##                data:{"requestPayoutOrderVO":data},
+    ##                dataType:"json",
+    ##                success:function(result){
+    ##                    if(result.success){
+    ##                        alert("请款单取消成功");
+    ##                        window.location.href="${rc.contextPath}/payment/cancelRequestPaymentOrder.do?requestPayoutOrderId=" + requestPayoutOrderId;
+    ##                    }
+    ##                },
+    ##                error: function (result) {
+    ##                    alert("程序异常！");
+    ##                    window.location.reload();
+    ##                }
+    ##            });
+
+    }
+    //财务支付请款
+    function pay(requestPayoutOrderId) {
+
+        var sure = confirm("确认要支付请款单吗？");
+        if (sure) {
+            var createDO = {"payoutOrderId": requestPayoutOrderId};
+            var data = JSON.stringify(createDO);
+            $.ajax({
+                url: '${rc.contextPath}/payment/pay.do',
+                method: "POST",
+                data: {"createDO": data},
+                dataType: "json",
+                success: function (result) {
+                    if (result.success) {
+                        alert("请款单支付成功");
+                        window.location.href = "${rc.contextPath}/payment/requestPayOrderList.htm";
+                    }
+                },
+                error: function (result) {
+                    alert("程序异常！");
+                    window.location.reload();
+                }
+            });
+        }
+    }
+    //采购助理取消请款单
+    function cancel(requestPayoutOrderId) {
+
+        var sure = confirm("确认要取消请款单吗？");
+        if (sure) {
+            var createDO = {"requestPayoutOrderId": requestPayoutOrderId};
+            var data = JSON.stringify(createDO);
+            $.ajax({
+                url: '${rc.contextPath}/payment/cancelRequestPaymentOrder.do',
+                method: "POST",
+                data: {"requestPayoutOrderVO": data},
+                dataType: "json",
+                success: function (result) {
+                    if (result.success) {
+                        alert("请款单取消成功");
+                        window.location.href = "${rc.contextPath}/payment/requestPayOrderList.htm";
+                    }
+                },
+                error: function (result) {
+                    alert("程序异常！");
+                    window.location.reload();
+                }
+            });
+        }
+    }
+
+    /**
+     *  表单提交action
+     */
+    function multipleSelect(requestPayoutOrderId) {
+
+        var sure = confirm("确认要取消请款单吗？");
+        if (sure) {
+            var createDO = {"requestPayoutOrderId": requestPayoutOrderId};
+            var data = JSON.stringify(createDO);
+            $.ajax({
+                url: '${rc.contextPath}/payment/cancelRequestPaymentOrder.do',
+                method: "POST",
+                data: {"requestPayoutOrderVO": data},
+                dataType: "json",
+                success: function (result) {
+                    if (result.success) {
+                        alert("请款单取消成功");
+                        window.location.href = "${rc.contextPath}/payment/requestPayOrderList.htm";
+                    }
+                },
+                error: function (result) {
+                    alert("程序异常！");
+                    window.location.reload();
+                }
+            });
+        }
+    }
+
+</script>
+
+<div class="content">
+
+    <div class="bd-main">
+        <div class="bd-main-inner">
+            <!--所属城市列表  -->
+            <form class="jqtransform" id="form1" name="form1" action="${rc.contextPath}/payment/requestPayOrderList.htm"
+                  method="post">
+                <table>
+                    <tr>
+                        <td align="right"><label class="tit">提交日期&nbsp;&nbsp;</label></td>
+                        <td>
+                            开始: <input class="form-input" name="createTimeBegin" id="createTimeBegin"
+                                       value="$!createTimeBegin">
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            结束: <input class="form-input" name="createTimeEnd" id="createTimeEnd"
+                                       value="$!createTimeEnd">
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            供应商 : <input class="form-input" name="supplierName" id="supplierName"
+                                         value="$!supplierName">
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            <label class="tit">状态:&nbsp;&nbsp;</label>
+                        </td>
+                        <td>
+                            <select name="status" id="status" multiple="multiple " class="input-time-day" >
+                                #foreach ($status in $map.entrySet())
+                                ##                                   #if($!statuses.contains($status.key) && $statuses.size() != $map.size())
+                                    #if($!statuses.contains($status.key)  && $statuses.size() )
+                                        <option value="$status.key" selected="selected">$status.value</option>
+                                    #end
+                                    #if($status.key != 3 && !($!statuses.contains($status.key)))
+                                        <option value="$status.key">$status.value</option>
+                                    #end
+                                #end
+                            </select>
+                        </td>
+                        <td><input name="statusStr" id="statusStr" hidden="true"></td>
+                        <td><a class="btn btn-warning btn-sm" onclick="javascript:getValue()">查找</a></td>
+                    </tr>
+                </table>
+            </form>
+            <!-- 主列表展示 -->
+            <table class="table">
+                <tr>
+                    <th>提交时间</th>
+                    <th>状态</th>
+                    <th>采购日期</th>
+                    <th>供应商</th>
+                    <th>请款总金额</th>
+                    <th>请款采购</th>
+                    <th>财务结款人</th>
+                    <th>结款时间</th>
+                    <th>操作</th>
+                </tr>
+
+                #set ($rowCount = 0)
+                #foreach($requestPayoutOrderDTO in $page.result)
+                    #set ($isOddRow = $rowCount % 2 != 0)
+                    #if ($isOddRow)
+                    <tr>
+                    #else
+                    <tr class="sep-bar">
+                    #end
+                    <td>$DateTool.dateFormat($!requestPayoutOrderDTO.gmtCreate)</td>
+                    <td>$!requestPayoutOrderDTO.statusDes</td>
+                    <td>$!requestPayoutOrderDTO.purchaseDateRange</td>
+                    <td>$!requestPayoutOrderDTO.supplierName</td>
+                    <td>$NumberTool.toYuanNumber($!requestPayoutOrderDTO.totalRequestFee)</td>
+                    <td>$!requestPayoutOrderDTO.requestPayoutUserName</td>
+                    <td>$!requestPayoutOrderDTO.payerName</td>
+                    <td>$DateTool.dateFormat($!requestPayoutOrderDTO.payTime)</td>
+                    <td class="opt">
+                        <a href="${rc.contextPath}/payment/payDetail.htm?payoutOrderId=$!requestPayoutOrderDTO.requestPayoutOrderId">查看</a>
+                        #if(($!requestPayoutOrderDTO.status == 2 || $!requestPayoutOrderDTO.status == 4) && $actionFlag == 1 )
+                            <a href="${rc.contextPath}/payment/payDetail.htm?payoutOrderId=$!requestPayoutOrderDTO.requestPayoutOrderId&editFlag=1">付款</a>
+                        #end
+                        #if(($!requestPayoutOrderDTO.status == 1 || $!requestPayoutOrderDTO.status == 2)
+                         && $userId == $!requestPayoutOrderDTO.requestPayoutUserId )
+                            <a href="javascript:cancel('$!requestPayoutOrderDTO.requestPayoutOrderId')">取消</a>
+                        #end
+                    </td>
+
+                </tr>
+                    #set ($rowCount = $rowCount + 1)
+                #end
+
+            </table>
+            <div class="text-center">
+                #parse("/common/page.vm")
+            </div>
+        </div>
+        <!--bd-main-inner-->
+    </div>
+    <!--bd-main-->
+</div>
+
+<!--content-->
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#status").multipleSelect({
+            filter: true,
+            single: false,
+            selectAllText: "全选",
+            allSelected: "全部",
+            countSelected:"",
+
+    });
+
+
+    });
+
+
+    function getValue(status) {
+        var status = this.status || document.getElementById("status");
+        var val = '';
+        for (var i = 0; i < status.length; i++) {
+            if (status.options[i].selected) {
+                val += status.options[i].value + ',';
+            }
+        }
+        $("#statusStr").val(val);
+        $(form1).submit();
+        console.log(val);
+    }
+
+
+</script>
