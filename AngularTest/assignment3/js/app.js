@@ -19,16 +19,18 @@
 	NarrowItDownController.$inject = ['MenuSearchService'];
 	function NarrowItDownController(MenuSearchService){
 		var ctrl  = this;
-		ctrl.found = "";		 
+		ctrl.find = "";	
+		ctrl.foundList = [];	 
 		ctrl.toFound = function(){
-			var promise = MenuSearchService.getMatchedMenuItems(ctrl.found);
+			var promise = MenuSearchService.getMatchedMenuItems(ctrl.find);
 			// console.log(ctrl.foundList);
 			promise.then(function(response){	
-				ctrl.foundList = checkItem(response.data,ctrl.found);
+				ctrl.foundList = checkItem(response.data,ctrl.find);
 				console.log(ctrl.foundList);
 			}).catch(function(error){
 				console.log("Something Wrong");
 			});
+			console.log(ctrl.foundList);
 
 		};
 
