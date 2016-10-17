@@ -11,7 +11,7 @@
 			scope:{
 				found: '<',
 				onRemove: '&'
-			}	
+			}
 		};
 		return ddo;
 	}

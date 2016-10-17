@@ -1,7 +1,10 @@
+</br>
+</br>
+</br>
 <ul>
-	<li ng-repeat="item in ctrl.foundList">
+	<li ng-repeat="item in found">
 		{{ item.name }}
-		<button ng-click="ctrl.onRemove({index:$index})">Don't want this!</button>
+		<button ng-click="onRemove({index:$index})">Don't want this!</button>
 	</li>
 </ul>
 <!-- <div ng-if="ctrl.foundList">Nothing Found</div> -->
