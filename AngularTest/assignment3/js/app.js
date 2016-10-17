@@ -22,15 +22,20 @@
 		ctrl.find = "";	
 		ctrl.foundList = [];	 
 		ctrl.toFound = function(){
-			var promise = MenuSearchService.getMatchedMenuItems(ctrl.find);
-			// console.log(ctrl.foundList);
-			promise.then(function(response){	
-				ctrl.foundList = checkItem(response.data,ctrl.find);
+			if(ctrl.find == ""){
+				ctrl.foundList = [];
+				return;
+			}else{
+				var promise = MenuSearchService.getMatchedMenuItems(ctrl.find);
+				// console.log(ctrl.foundList);
+				promise.then(function(response){	
+					ctrl.foundList = checkItem(response.data,ctrl.find);
+					console.log(ctrl.foundList);
+				}).catch(function(error){
+					console.log("Something Wrong");
+				});
 				console.log(ctrl.foundList);
-			}).catch(function(error){
-				console.log("Something Wrong");
-			});
-			console.log(ctrl.foundList);
+			}
 
 		};
 
