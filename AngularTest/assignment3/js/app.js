@@ -20,7 +20,8 @@
 	function NarrowItDownController(MenuSearchService){
 		var ctrl  = this;
 		ctrl.find = "";	
-		ctrl.foundList = [];	 
+		ctrl.foundList = [];
+		ctrl.hint = "";	 
 		ctrl.toFound = function(){
 			if(ctrl.find == ""){
 				ctrl.foundList = [];
@@ -31,6 +32,11 @@
 				promise.then(function(response){	
 					ctrl.foundList = checkItem(response.data,ctrl.find);
 					console.log(ctrl.foundList);
+					if(ctrl.foundList.length == 0){
+						ctrl.hint = "nothing found";
+					}else{
+						ctrl.hint = "";
+					}
 				}).catch(function(error){
 					console.log("Something Wrong");
 				});
