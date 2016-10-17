@@ -63,8 +63,8 @@
 		var itemList  = items.menu_items;
 		// console.log(itemList.length);
 		for(var i=0; i<itemList.length;i++){
-			var name = itemList[i].name;
-			if(name.toLowerCase().indexOf(searchItem) !== -1){
+			var description = itemList[i].description;
+			if(description.toLowerCase().indexOf(searchItem) !== -1){
 				foundItems.push(itemList[i]);
 			}
 		}
