@@ -4,11 +4,11 @@
 (function () {
 	'use strict';
 
-	angular.module('menuapp')
+	angular.module('MenuApp')
 	.component('eachItem',{
 		templateUrl:'src/templates/item.template.html',
 		bindings:{
-			items:'<'
+			
 		}
 	});
 })();

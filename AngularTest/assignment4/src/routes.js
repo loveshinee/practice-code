@@ -1,23 +1,29 @@
 (function () {
 	'use strict';
 
-	angular.module('menuapp')
-	.config(RouteConfig);
+	angular.module('MenuApp')
+	.config(RoutesConfig);
 
-	RouteConfig.$inject = ['$stateProvider','$urlRouteProvider'];
+	RoutesConfig.$inject = ['$stateProvider','$urlRouteProvider'];
 
-	function RouteConfig($stateProvider,$urlRouteProvider){
+	function RoutesConfig($stateProvider,$urlRouteProvider){
 
 		$urlRouteProvider.otherwise('/');
 
 		$stateProvider
 		.state('home',{
 			url: '/',
-			templateUrl: 'index.html'
+			templateUrl: 'src/templates/home.template.html'
 		})
 		.state('category',{
-			url: '/categories',
-			templateUrl: 'src/templates/category.template.html'
+			url: '/category',
+			templateUrl: 'src/templates/category.template.html',
+			controller: 'CategoryController as category',
+			resolve: {
+				categories: ['MenuDataService',function(MenuDataService){
+					return MenuDataService.getAllCategories();
+				}]
+			}
 		})
 		.state('item',{
 			url: '/item',

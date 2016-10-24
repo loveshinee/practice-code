@@ -5,11 +5,11 @@
 (function () {
 	'use strict';
 
-	angular.module('menuapp')
-	.component('categories',{
+	angular.module('MenuApp')
+	.component('category',{
 		templateUrl:'src/templates/category.tempalte.html',
 		bindings:{
-			
+			categories: '<'
 		}
 	});
 })();

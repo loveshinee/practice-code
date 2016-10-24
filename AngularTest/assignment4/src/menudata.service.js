@@ -6,21 +6,21 @@
 (function (){
 	'use strict';
 
-	angular.module('data')
+	angular.module('Data')
 	.service('MenuDataService',MenuDataService);
 	
 	MenuDataService.$inject = ['$http'];
 	function MenuDataService($http){
 		var service = this;
-		service.getAllCategories(){
+		service.getAllCategories = function(){
 			var categories = $({
 				method:'get',
 				url:'https://davids-restaurant.herokuapp.com/categories.json'
 			});
 			return categories;
-		}
+		};
 
-		service.getItemsForCategory(item){
+		service.getItemsForCategory = function(item){
 			var specItem = $({
 				method:'get',
 				url:'https://davids-restaurant.herokuapp.com/menu_items.json?category='+item
