@@ -25,7 +25,7 @@
 				}]
 			}
 		})
-		.state('itemDetail',{
+		.state('mainCategory.itemDetail',{
 			url: '/item-detail/{{itemId}}',
 			templateUrl: 'src/category/templates/item.template.html',
 			controller: 'ItemDetailController as itemDetail',

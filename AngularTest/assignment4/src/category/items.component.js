@@ -8,7 +8,7 @@
 	.component('eachItem',{
 		templateUrl:'src/category/templates/item-detail.template.html',
 		bindings:{
-			
+			item: '<'
 		}
 	});
 })();

@@ -7,7 +7,7 @@
 	ItemDetailController.$inject = ['item'];
 	function ItemDetailController(item){
 		var itemDetail = this;
-		itemDetail.name = item.name;
-		itemDetail.description = special_instructions;
+		itemDetail.item = item;
+
 	}
 })();
