@@ -24,6 +24,16 @@
 					return MenuDataService.getAllCategories();
 				}]
 			}
+		})
+		.state('itemDetail',{
+			url: '/item-detail/{{itemId}}',
+			templateUrl: 'src/category/templates/item.template.html',
+			controller: 'ItemDetailController as itemDetail',
+			resolve: {
+				item : ['MenuDataService','$stateParams',function($stateParams,MenuDataService){
+					return MenuDataService.getItemsForCategory($stateParams.itemId);
+				}]
+			}
 		});
 	}
 })();

@@ -12,25 +12,32 @@
 	MenuDataService.$inject = ['$http','$q'];
 	function MenuDataService($http,$q){
 		var service = this;
+		var deferred = $q.defer();
 		service.getAllCategories = function(){
-			var deferred = $q.defer();
 			var promise = $http({
 				method: 'GET',
 				url: 'https://davids-restaurant.herokuapp.com/categories.json'
-			}).then(function(response) {
-				deferred.resolve({
-					categories: response.data
-				});
+			})
+
+			promise.then(function(response) {
+				deferred.resolve(
+					response.data
+				);
 			});
 			return deferred.promise;
 		};
 
 		service.getItemsForCategory = function(item){
-			var specItem = $({
+			// var deferred = $q.defer();
+			var promise = $({
 				method:'get',
 				url:'https://davids-restaurant.herokuapp.com/menu_items.json?category='+item
 			});
-			return specItem;
+			promise,then(function(response){
+				deferred.resolve(response.data);
+			});
+			console.log(deferred.promise);
+			return deferred.promise;
 		}
 	}
 })();

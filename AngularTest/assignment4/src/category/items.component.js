@@ -6,9 +6,9 @@
 
 	angular.module('MenuApp')
 	.component('eachItem',{
-		templateUrl:'src/category/templates/item.template.html',
+		templateUrl:'src/category/templates/item-detail.template.html',
 		bindings:{
-
+			
 		}
 	});
 })();
