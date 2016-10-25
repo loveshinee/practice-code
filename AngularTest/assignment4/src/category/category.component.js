@@ -7,8 +7,8 @@
 
 	angular.module('MenuApp')
 	.component('category',{
-		templateUrl:'src/templates/category.tempalte.html',
-		bindings:{
+		templateUrl: 'src/category/templates/categoryList.template.html',
+		bindings: {
 			categories: '<'
 		}
 	});

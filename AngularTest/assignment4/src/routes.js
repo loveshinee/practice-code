@@ -4,7 +4,7 @@
 	angular.module('MenuApp')
 	.config(RoutesConfig);
 
-	RoutesConfig.$inject = ['$stateProvider','$urlRouteProvider'];
+	RoutesConfig.$inject = ['$stateProvider','$urlRouterProvider'];
 
 	function RoutesConfig($stateProvider,$urlRouteProvider){
 
@@ -13,21 +13,17 @@
 		$stateProvider
 		.state('home',{
 			url: '/',
-			templateUrl: 'src/templates/home.template.html'
+			templateUrl: 'src/category/templates/home.template.html'
 		})
-		.state('category',{
-			url: '/category',
-			templateUrl: 'src/templates/category.template.html',
-			controller: 'CategoryController as category',
+		.state('mainCategory',{
+			url: '/main-category',
+			templateUrl: 'src/category/templates/main-category.template.html',
+			controller: 'MainCategoryController as mainCategory',
 			resolve: {
 				categories: ['MenuDataService',function(MenuDataService){
 					return MenuDataService.getAllCategories();
 				}]
 			}
-		})
-		.state('item',{
-			url: '/item',
-			templateUrl: 'src/templates/item.template.html'
 		});
 	}
 })();

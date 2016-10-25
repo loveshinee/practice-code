@@ -5,20 +5,21 @@
 	<title>Assignment4</title>
 </head>
 <body ng-app="MenuApp">
-	Welcome to our Resturant
-	
+	<h1>Welcome to our Resturant</h1>
+	<br>
 	<ui-view></ui-view>		
 
 	<script src="lib/angular.min.js"></script>
 	<script src="lib/angular-ui-router.min.js"></script>
 
-	<script src="src/data.module.js"></script>
-	<script src="src/menuapp.module.js"></script>
+	<script src="src/category/data.module.js"></script>
+	<script src="src/category/menuapp.module.js"></script>
 
 	<script src="src/routes.js"></script>
-	<!-- <script src="src/categories.component.js"></script> -->
-	<!-- <script src="src/items.component.js"></script> -->
-	<!-- <script src="src/menudata.service.js"></script> -->
+	<script src="src/category/main-category.controller.js"></script>
+	<script src="src/category/category.component.js"></script>
+	<script src="src/category/items.component.js"></script>
+	<script src="src/category/menudata.service.js"></script>
 
 </body>
 </html>
