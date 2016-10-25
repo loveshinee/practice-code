@@ -29,11 +29,12 @@
 
 		service.getItemsForCategory = function(item){
 			// var deferred = $q.defer();
+			console.log(2);
 			var promise = $({
-				method:'get',
-				url:'https://davids-restaurant.herokuapp.com/menu_items.json?category='+item
+				method: 'GET',
+				url: 'https://davids-restaurant.herokuapp.com/menu_items.json?category='+item
 			});
-			promise,then(function(response){
+			promise.then(function(response){
 				deferred.resolve(response.data);
 			});
 			console.log(deferred.promise);
