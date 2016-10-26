@@ -26,19 +26,18 @@
 			});
 			return deferred.promise;
 		};
-
+		// var deferred2 = $q.defer();
 		service.getItemsForCategory = function(item){
-			// var deferred = $q.defer();
-			console.log(2);
-			var promise = $({
+			var deferred2 = $q.defer();
+			var promise = $http({
 				method: 'GET',
 				url: 'https://davids-restaurant.herokuapp.com/menu_items.json?category='+item
 			});
 			promise.then(function(response){
-				deferred.resolve(response.data);
+				deferred2.resolve(response.data.menu_items);
 			});
-			console.log(deferred.promise);
-			return deferred.promise;
+			// console.log(deferred.promise);
+			return deferred2.promise;
 		}
 	}
 })();

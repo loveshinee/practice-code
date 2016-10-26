@@ -4,10 +4,10 @@
 	angular.module('MenuApp')
 	.controller('ItemDetailController',ItemDetailController);
 
-	ItemDetailController.$inject = ['item'];
-	function ItemDetailController(item){
+	ItemDetailController.$inject = ['itemList'];
+	function ItemDetailController(itemList){
 		var itemDetail = this;
-		itemDetail.item = item;
-
+		itemDetail.itemList = itemList;
+		console.log(itemList);
 	}
 })();

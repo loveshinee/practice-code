@@ -25,13 +25,12 @@
 				}]
 			}
 		})
-		.state('mainCategory.itemDetail',{
+		.state('itemDetail',{
 			url: '/item-detail/{itemId}',
 			templateUrl: 'src/category/templates/item.template.html',
 			controller: 'ItemDetailController as itemDetail',
 			resolve: {
-				item: ['MenuDataService','$stateParams',function ($stateParams,MenuDataService){
-					console.log($stateParams.itemId);
+				itemList: ['MenuDataService','$stateParams',function (MenuDataService,$stateParams){
 					return MenuDataService.getItemsForCategory($stateParams.itemId);
 				}]
 			}
